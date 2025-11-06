@@ -1,0 +1,6 @@
+app/main.log
+app/output.txt
+.env
+app/__pycache__
+app/ava/*
+!app/ava/default_avatar.jpg
