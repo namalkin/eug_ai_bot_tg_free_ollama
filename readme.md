@@ -87,6 +87,34 @@ docker compose down;
 - Все чувствительные данные хранятся только в `.env` (не добавляйте его в репозиторий)
 - Для публикации используйте `.env.example` как шаблон
 
+## P.s. контейнер нейросети
+
+Нейросеть запускается в отдельном проекте и `docker-compose.yml` файле:
+
+```yaml
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-gemma3
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama-data:/root/.ollama
+    restart: unless-stopped
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+```
+
+В проекте используется модель [**Gemma 3 (12B)**](https://ollama.com/library/gemma3:12b),
+предоставляемая через **Ollama**.
+
+
 ## Лицензия
 MIT
 
